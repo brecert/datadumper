@@ -86,7 +86,6 @@ loom {
 			vmArg("-Dfabric-api.datagen.output-dir=${file("run/generated")}")
 
 			ideConfigGenerated = true
-			runDir "build/datagen"
 		}
 	}
 }
