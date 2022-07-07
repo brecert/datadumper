@@ -1,27 +1,26 @@
 package dev.bree.datadumper.datagen;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import dev.bree.datadumper.datagen.serializer.EntityAttributeModifierSerializer;
+import dev.bree.datadumper.datagen.serializer.EntityAttributeSerializer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
-import net.minecraft.item.Item;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ItemDataProvider implements DataProvider {
     protected final FabricDataGenerator dataGenerator;
-    private final DataGenerator.PathResolver pathResolver;
 
     protected ItemDataProvider(FabricDataGenerator dataGenerator) {
         this.dataGenerator = dataGenerator;
-        this.pathResolver = dataGenerator.createPathResolver(DataGenerator.OutputType.DATA_PACK, "items");
     }
 
     @Override
@@ -32,6 +31,11 @@ public class ItemDataProvider implements DataProvider {
     @Override
     public void run(DataWriter writer) throws IOException {
         final var items = new HashMap<String, JsonObject>();
+
+        var gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(EntityAttributeModifier.class, new EntityAttributeModifierSerializer());
+        gsonBuilder.registerTypeAdapter(EntityAttribute.class, new EntityAttributeSerializer());
+        var gson = gsonBuilder.create();
 
         for(final var id : Registry.ITEM.getIds()) {
             final var json = new JsonObject();
@@ -45,8 +49,24 @@ public class ItemDataProvider implements DataProvider {
 
             json.addProperty("isEdible", item.isFood());
             json.addProperty("isDamageable", item.isDamageable());
-            json.addProperty("isEnchantable", item.getEnchantability() != 0);
             json.addProperty("isFireResistant", item.isFireproof());
+
+            json.addProperty("enchantability", item.getEnchantability());
+
+            var defaultAttributes = new JsonObject();
+            for (final var slot : EquipmentSlot.values()) {
+                final var attributeMap = item.getDefaultStack().getAttributeModifiers(slot);
+
+                if(attributeMap.isEmpty()) continue;
+
+                var attributesJSON = new JsonObject();
+                for (final var attributeName : attributeMap.keys()) {
+                    final var modifiers = attributeMap.get(attributeName);
+                    attributesJSON.add(attributeName.getTranslationKey(), gson.toJsonTree(modifiers));
+                }
+                defaultAttributes.add(slot.getName(), attributesJSON);
+            }
+            json.add("attributes", defaultAttributes);
 
             ItemGroup group = item.getGroup();
             if (group != null) {

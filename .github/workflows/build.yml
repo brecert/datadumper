@@ -44,5 +44,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            build/libs/
-            run/generated/
+            ./build/libs/**/*
+            ./run/generated/**/*
