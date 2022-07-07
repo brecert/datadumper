@@ -37,7 +37,7 @@ public class ItemDataProvider implements DataProvider {
         gsonBuilder.registerTypeAdapter(EntityAttribute.class, new EntityAttributeSerializer());
         var gson = gsonBuilder.create();
 
-        for(final var id : Registry.ITEM.getIds()) {
+        for (final var id : Registry.ITEM.getIds()) {
             final var json = new JsonObject();
             final var item = Registry.ITEM.get(id);
 
@@ -57,7 +57,7 @@ public class ItemDataProvider implements DataProvider {
             for (final var slot : EquipmentSlot.values()) {
                 final var attributeMap = item.getDefaultStack().getAttributeModifiers(slot);
 
-                if(attributeMap.isEmpty()) continue;
+                if (attributeMap.isEmpty()) continue;
 
                 var attributesJSON = new JsonObject();
                 for (final var attributeName : attributeMap.keys()) {
@@ -75,7 +75,7 @@ public class ItemDataProvider implements DataProvider {
 
             json.addProperty("rarity", item.getDefaultStack().getRarity().toString().toLowerCase());
 
-            items.computeIfAbsent(id.getNamespace(),  (namespace) -> new JsonObject()).add(id.getPath(), json);
+            items.computeIfAbsent(id.getNamespace(), (namespace) -> new JsonObject()).add(id.getPath(), json);
         }
 
         for (final var entry : items.entrySet()) {

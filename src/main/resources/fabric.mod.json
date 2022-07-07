@@ -21,7 +21,7 @@
       "dev.bree.datadumper.DataDumperMod"
     ],
     "fabric-datagen": [
-      "dev.bree.datadumper.datagen.ItemDatagenEntrypoint"
+      "dev.bree.datadumper.datagen.DataDumperDatagen"
     ]
   },
   "mixins": [
