@@ -1,5 +1,8 @@
 package dev.bree.datadumper.datagen;
 
+import dev.bree.datadumper.datagen.provider.AttributeDataProvider;
+import dev.bree.datadumper.datagen.provider.FoodDataProvider;
+import dev.bree.datadumper.datagen.provider.ItemDataProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 

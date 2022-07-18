@@ -1,4 +1,4 @@
-package dev.bree.datadumper.datagen;
+package dev.bree.datadumper.datagen.provider;
 
 import com.google.gson.*;
 import dev.bree.datadumper.datagen.serializer.EntityAttributeModifierSerializer;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class ItemDataProvider implements DataProvider {
     protected final FabricDataGenerator dataGenerator;
 
-    protected ItemDataProvider(FabricDataGenerator dataGenerator) {
+    public ItemDataProvider(FabricDataGenerator dataGenerator) {
         this.dataGenerator = dataGenerator;
     }
 

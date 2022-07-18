@@ -1,4 +1,4 @@
-package dev.bree.datadumper.datagen;
+package dev.bree.datadumper.datagen.provider;
 
 import com.google.gson.*;
 import dev.bree.datadumper.datagen.serializer.*;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class FoodDataProvider implements DataProvider {
     protected final FabricDataGenerator dataGenerator;
 
-    protected FoodDataProvider(FabricDataGenerator dataGenerator) {
+    public FoodDataProvider(FabricDataGenerator dataGenerator) {
         this.dataGenerator = dataGenerator;
     }
 
