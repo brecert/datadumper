@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 public class EntityAttributeModifierSerializer implements JsonSerializer<EntityAttributeModifier> {
     @Override
     public JsonElement serialize(EntityAttributeModifier src, Type type, JsonSerializationContext jsonSerializationContext) {
-        var json = new JsonObject();
+        final var json = new JsonObject();
         json.addProperty("amount", src.getValue());
         json.addProperty("name", src.getName());
         json.addProperty("UUID", src.getId().toString());

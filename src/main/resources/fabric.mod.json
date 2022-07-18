@@ -24,6 +24,7 @@
       "dev.bree.datadumper.datagen.DataDumperDatagen"
     ]
   },
+  "accessWidener": "datadumper.accesswidener",
   "mixins": [
   ],
 

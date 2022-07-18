@@ -77,6 +77,8 @@ publishing {
 }
 
 loom {
+	accessWidenerPath = file("src/main/resources/datadumper.accesswidener")
+
 	runs {
 		datagen {
 			server()
