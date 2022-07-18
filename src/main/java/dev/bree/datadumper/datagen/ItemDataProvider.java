@@ -62,7 +62,8 @@ public class ItemDataProvider implements DataProvider {
                 var attributesJSON = new JsonObject();
                 for (final var attributeName : attributeMap.keys()) {
                     final var modifiers = attributeMap.get(attributeName);
-                    attributesJSON.add(attributeName.getTranslationKey(), gson.toJsonTree(modifiers));
+                    final var attributeId = Registry.ATTRIBUTE.getKey(attributeName).get().getValue();
+                    attributesJSON.add(attributeId.toString(), gson.toJsonTree(modifiers));
                 }
                 defaultAttributes.add(slot.getName(), attributesJSON);
             }
