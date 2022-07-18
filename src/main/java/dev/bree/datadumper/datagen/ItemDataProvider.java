@@ -76,7 +76,7 @@ public class ItemDataProvider implements DataProvider {
 
             json.addProperty("rarity", item.getDefaultStack().getRarity().toString().toLowerCase());
 
-            items.computeIfAbsent(id.getNamespace(), (namespace) -> new JsonObject()).add(id.getPath(), json);
+            items.computeIfAbsent(id.getNamespace(), (namespace) -> new JsonObject()).add(id.toString(), json);
         }
 
         for (final var entry : items.entrySet()) {

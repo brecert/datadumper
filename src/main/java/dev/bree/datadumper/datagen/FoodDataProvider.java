@@ -34,7 +34,7 @@ public class FoodDataProvider implements DataProvider {
                 .collect(Collectors.groupingBy(
                         item -> Registry.ITEM.getId(item).getNamespace(),
                         Collectors.toMap(
-                                item -> Registry.ITEM.getId(item).getPath(),
+                                item -> Registry.ITEM.getId(item).toString(),
                                 item -> item.getFoodComponent()
                         )
                 ));
@@ -48,7 +48,7 @@ public class FoodDataProvider implements DataProvider {
 
         final var gson = gsonBuilder.create();
         for (final var namespace : foods.keySet()) {
-            DataProvider.writeToPath(writer, gson.toJsonTree(foods), getOutputPath(namespace));
+            DataProvider.writeToPath(writer, gson.toJsonTree(foods.get(namespace)), getOutputPath(namespace));
         }
     }
 

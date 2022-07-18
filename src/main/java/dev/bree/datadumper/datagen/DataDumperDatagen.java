@@ -8,5 +8,6 @@ public class DataDumperDatagen implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         fabricDataGenerator.addProvider(ItemDataProvider::new);
         fabricDataGenerator.addProvider(FoodDataProvider::new);
+        fabricDataGenerator.addProvider(AttributeDataProvider::new);
     }
 }
