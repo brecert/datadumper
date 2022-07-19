@@ -3,9 +3,11 @@ package dev.bree.datadumper.datagen.provider;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dev.bree.datadumper.datagen.serializer.BlockSerializer;
+import dev.bree.datadumper.datagen.serializer.BlockStateSerializer;
 import dev.bree.datadumper.datagen.serializer.IdentifierSerializer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
 import net.minecraft.util.Identifier;
@@ -33,6 +35,7 @@ public class BlockDataProvider implements DataProvider {
         final var gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Identifier.class, new IdentifierSerializer());
         gsonBuilder.registerTypeHierarchyAdapter(Block.class, new BlockSerializer());
+        gsonBuilder.registerTypeHierarchyAdapter(BlockState.class, new BlockStateSerializer());
         final var gson = gsonBuilder.create();
 
         for (final var id : Registry.BLOCK.getIds()) {

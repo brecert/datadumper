@@ -23,7 +23,7 @@ public class BlockSerializer implements JsonSerializer<Block> {
         json.addProperty("speedMultiplier", block.getVelocityMultiplier());
         json.addProperty("jumpMultiplier", block.getJumpVelocityMultiplier());
         json.addProperty("hasDynamicShape", block.hasDynamicBounds());
-
+        json.add("defaultState", jsonSerializationContext.serialize(block.getDefaultState()));
         return json;
     }
 }
