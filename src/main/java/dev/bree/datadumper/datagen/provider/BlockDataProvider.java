@@ -2,14 +2,12 @@ package dev.bree.datadumper.datagen.provider;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import dev.bree.datadumper.datagen.serializer.ClampedEntityAttributeSerializer;
-import dev.bree.datadumper.datagen.serializer.EntityAttributeSerializer;
+import dev.bree.datadumper.datagen.serializer.BlockSerializer;
 import dev.bree.datadumper.datagen.serializer.IdentifierSerializer;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -17,10 +15,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-public class AttributeDataProvider implements DataProvider {
+public class BlockDataProvider implements DataProvider {
     protected final FabricDataGenerator dataGenerator;
 
-    public AttributeDataProvider(FabricDataGenerator dataGenerator) {
+    public BlockDataProvider(FabricDataGenerator dataGenerator) {
         this.dataGenerator = dataGenerator;
     }
 
@@ -32,17 +30,15 @@ public class AttributeDataProvider implements DataProvider {
     @Override
     public void run(DataWriter writer) throws IOException {
         final var attributes = new HashMap<String, JsonObject>();
-
         final var gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeHierarchyAdapter(EntityAttribute.class, new EntityAttributeSerializer());
-        gsonBuilder.registerTypeAdapter(ClampedEntityAttribute.class, new ClampedEntityAttributeSerializer());
         gsonBuilder.registerTypeAdapter(Identifier.class, new IdentifierSerializer());
+        gsonBuilder.registerTypeHierarchyAdapter(Block.class, new BlockSerializer());
         final var gson = gsonBuilder.create();
 
-        for (final var id : Registry.ATTRIBUTE.getIds()) {
-            final var attribute = Registry.ATTRIBUTE.get(id);
+        for (final var id : Registry.BLOCK.getIds()) {
+            final var block = Registry.BLOCK.get(id);
             final var namespace = attributes.computeIfAbsent(id.getNamespace(), (_namespace) -> new JsonObject());
-            namespace.add(id.toString(), gson.toJsonTree(attribute));
+            namespace.add(id.toString(), gson.toJsonTree(block));
         }
 
         for (final var entry : attributes.entrySet()) {
@@ -51,6 +47,6 @@ public class AttributeDataProvider implements DataProvider {
     }
 
     private Path getOutputPath(String namespace) {
-        return dataGenerator.getOutput().resolve("data/%s/attributes.json".formatted(namespace));
+        return dataGenerator.getOutput().resolve("data/%s/blocks.json".formatted(namespace));
     }
 }
