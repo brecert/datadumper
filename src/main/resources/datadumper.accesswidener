@@ -1,3 +1,6 @@
 accessWidener   v2  named
 
-accessible  field   net/minecraft/enchantment/Enchantment    slotTypes   [Lnet/minecraft/entity/EquipmentSlot;
+accessible  field   net/minecraft/enchantment/Enchantment       slotTypes   [Lnet/minecraft/entity/EquipmentSlot;
+
+accessible  field   net/minecraft/text/TranslatableTextContent  key         Ljava/lang/String;
+accessible  field   net/minecraft/text/TranslatableTextContent  args        [Ljava/lang/Object;
