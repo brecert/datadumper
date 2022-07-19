@@ -12,5 +12,6 @@ public class DataDumperDatagen implements DataGeneratorEntrypoint {
         fabricDataGenerator.addProvider(AttributeDataProvider::new);
         fabricDataGenerator.addProvider(RegistriesDataProvider::new);
         fabricDataGenerator.addProvider(EnchantmentDataProvider::new);
+        fabricDataGenerator.addProvider(EquipmentSlotProvider::new);
     }
 }
